@@ -61,7 +61,7 @@ shinyServer(function(input, output, session) {
           return()
       }
 
-      prediction() %>% select(source, `predicted word` = wp,
-                              `probability (%)` = percentage)
+      prediction() %>% select(`Input from prediction` = source, `Predicted word` = wp,
+                              `Probability (%)` = percentage)
   })
 })
