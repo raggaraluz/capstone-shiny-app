@@ -55,6 +55,13 @@ shinyServer(function(input, output, session) {
       }
   })
   
-  output$stats <- renderTable({
-      return(data.frame(prediction()))})
+  output$stats <- renderTable(include.rownames = FALSE,
+  {
+      if (is.null(prediction()) || nrow(prediction()) == 0) {
+          return()
+      }
+
+      prediction() %>% select(source, `predicted word` = wp,
+                              `probability (%)` = percentage)
+  })
 })

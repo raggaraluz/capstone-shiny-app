@@ -17,7 +17,7 @@ library(dplyr)
 # 
 # writeLines(c(news, blogs, twit), 'reduced_dataset.txt')
 
-sentences <- readLines(file('reduced_dataset.txt', 'rb'), encoding = 'UTF-8')
+sentences <- readLines(file('../data/reduced_dataset.txt', 'rb'), encoding = 'UTF-8')
 # sentences <- sample(sentences, length(sentences) * .2)
 
 docs <- corpus(sentences)
@@ -33,7 +33,7 @@ percs <- 0.95
 most.used <- names(which(cdf.1 <= percs))
 tokensSubset <- selectFeatures(tokensAll, most.used, selection = c('keep'))
 
-rm(dist.1, top.1, cdf.1, tokensAll)
+rm(dist.1, cdf.1, tokensAll)
 
 #dist.1 <- dfm(docs)
 #words <- names(topfeatures(dist.1, 10000))
@@ -72,9 +72,11 @@ toDataFrame <- function(dist.c, n) {
 data.4 <- toDataFrame(dist.4, 4)
 data.3 <- toDataFrame(dist.3, 3)
 data.2 <- toDataFrame(dist.2, 2)
+data.1 <- data.frame(wp = names(top.1[1:3]), count = top.1[1:3], total = sum(top.1) )
+
 #data.3.s <- toDataFrame(dist.3.s, 3)
 
-save(file='../shiny-app/data_3.Rdata', data.4, data.3, data.2, most.used)
+save(file='data_english.Rdata', data.4, data.3, data.2, data.1, most.used)
 
 # # Q1
 # #q1.2 <- data.2 %>% filter(w1 == 'of')
