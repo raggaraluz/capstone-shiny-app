@@ -9,7 +9,8 @@ get.prediction <- function(input) {
     
     if (l >= 3)
     {
-        pred <- get.prediction.from.tokens(tokens[l-2], tokens[l-1], tokens[l])
+        pred <- get.prediction.from.tokens(tokens[l-2], tokens[l-1], tokens[l]) %>%
+            slice(1:3)
     }
     
     if (nrow(pred) < 3 && l >= 2)
@@ -18,7 +19,7 @@ get.prediction <- function(input) {
             filter(!(wp %in% pred$wp)) %>%
             slice(1:(3-nrow(pred)))
         
-        pred <- rbind(tmp.pred, pred)
+        pred <- rbind(pred, tmp.pred)
     }
     
     if (nrow(pred) < 3 && l >= 1)
